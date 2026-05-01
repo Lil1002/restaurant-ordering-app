@@ -48,7 +48,7 @@ export default function OrdersPage() {
                         <Link to={`/orders/${order.id}`}>
                             Order #{order.id} -{' '}
                             {new Date().toLocaleString()} - {' '}
-                            {order.status} - Tax ${order.tax.toFixed(2)} - Tip $
+                            {order.status ?? 'In Progress'} - Tax ${order.tax.toFixed(2)} - Tip $
                             {order.tip.toFixed(2)}
                         </Link>
                     </li>

@@ -60,7 +60,7 @@ export default function OrderPage() {
 
                 <section className='checkout-section'>
                     <p>Order Time: {new Date().toLocaleString()}</p>
-                    <p>Status: {order.status}</p>
+                    <p>Status: {order.status ?? 'In Progress'}</p>
                 </section>
 
                 <section className='checkout-section'>

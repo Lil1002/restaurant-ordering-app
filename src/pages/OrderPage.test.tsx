@@ -30,7 +30,7 @@ vi.mock('../api/orders', () => ({
       location: '',
       ordertime: '',
       pickuptime: '',
-      status: 'completed',
+      status: 'In Progress',
       tax: 0,
       tip: 0,
       userid: 1,
