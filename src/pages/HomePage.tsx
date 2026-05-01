@@ -3,13 +3,10 @@ import MenuItemCard from '../components/MenuItemCard';
 import type { MenuItem } from '../api/menu';
 import { getMenuItems } from '../api/menu';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
-
 
 export default function HomePage() {
     const [items, setItems] = useState<MenuItem[]>([]);
     const { addItem } = useCart();
-    const { user } = useAuth();
 
     useEffect(() => {
         getMenuItems()

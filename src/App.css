@@ -269,4 +269,59 @@
     cursor: pointer;
 }
 
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
+.order-item {
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.order-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.order-item:hover .order-link {
+  background: #f3f4f6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.order-id {
+  font-weight: 600;
+}
+
+.order-meta {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.15rem;
+}
+
+.order-status {
+  font-weight: 500;
+}
+
+.order-amounts {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.empty-text {
+  margin-top: 1rem;
+  color: #6b7280;
+  font-size: 0.95rem;
+}

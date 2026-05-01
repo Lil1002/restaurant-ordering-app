@@ -1,5 +1,4 @@
 import type { MenuItem } from '../api/menu';
-import { buildFoodImageURL } from '../api/menu';
 
 interface MenuItemCardProps {
     item: MenuItem;

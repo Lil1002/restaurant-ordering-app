@@ -19,10 +19,6 @@ export default function Header() {
             </div>
             <div className='header-right'>
                 <nav>
-        
-                    {' | '}
-                    <Link className='header-routes' to='/orders'>Orders</Link>
-                    {' | '}
                     {user ? (
                         <>
                         <span className='header-text'>Hello, {user.username}</span>{' | '}
@@ -34,6 +30,8 @@ export default function Header() {
                         <Link className='header-routes' to='/register'>Register</Link>
                         </>
                     )}
+                     {' | '}
+                    <Link className='header-routes' to='/orders'>Orders</Link>
                     {' | '}
                      <Link className='header-routes' to='/checkout'>Cart ({totalItems})</Link>
                 </nav>
