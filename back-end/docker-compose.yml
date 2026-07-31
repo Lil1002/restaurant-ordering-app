@@ -1,0 +1,78 @@
+services:
+  daamdb:
+    build:
+      context: daamdb
+      dockerfile: Dockerfile
+    image: steve353/daam-db
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 50M
+    restart: always
+    volumes:
+      # - type: bind
+      #   source: daamdb/daamdb.sql
+      #   target: /docker-entrypoint-initdb.d/daamdb.sql
+      #   read_only: true
+      - daamdb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret123
+      MYSQL_DATABASE: daamdb
+    ports:
+      - 3336:3306
+  daamauth:
+    build:
+      context: auth-server-mysql
+      dockerfile: Dockerfile
+    image: steve353/daam-auth
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 50M
+    restart: always
+    environment:
+      DB_HOST: daamdb
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret123
+      DB_NAME: daamdb
+      SERVER_PORT: 9000
+    ports:
+      - 9000:9000
+  daamsrv:
+    profiles:
+      - full
+    build:
+        context: daam-server
+        dockerfile: Dockerfile
+    image: steve353/daam-srv
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 50M
+    restart: always
+    environment:
+      DB_HOST: daamdb
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: secret123
+      DB_NAME: daamdb
+      SERVER_PORT: 8080
+      DEBUG_LEVEL: INFO
+      DAAM_SEC: false
+      DB_DDL: update
+      DB_INIT: always
+      DB_ON_ERR: true
+      SEC_DEBUG: ERROR
+    ports:
+      - 8180:8080
+
+volumes:
+  daamdb:
+    driver: local

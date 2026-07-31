@@ -4,6 +4,7 @@ import { getOrders, type Order} from '../api/orders';
 import { useAuth } from '../context/AuthContext';
 
 export default function OrdersPage() {
+    console.log('auth object', useAuth());
     const { user } = useAuth();
     const navigate = useNavigate(); 
     const [orders, setOrders] = useState<Order[]>([]);
@@ -29,6 +30,7 @@ export default function OrdersPage() {
         );
     }
 
+    console.log("orders", orders);
     const myOrders = orders.filter((o) => o.userid === user.id);
 
     if (!myOrders.length) {

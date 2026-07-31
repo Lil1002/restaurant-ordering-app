@@ -33,7 +33,7 @@ export function CartProvider({children}: { children: ReactNode}) {
     };
 
     const removeItem = (menuItemId: number) => {
-        setItems((prev) => prev.filter((c) => c.menuItem.id !== menutItemId));
+        setItems((prev) => prev.filter((c) => c.menuItem.id !== menuItemId));
     };
 
     const clearCart = () => setItems([]);

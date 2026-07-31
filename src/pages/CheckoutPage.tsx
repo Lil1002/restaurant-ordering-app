@@ -6,7 +6,7 @@ import { createOrder, createOrderItems } from '../api/orders';
 
 
 export default function CheckoutPage() {
-    const { items, totalItems, clearCart } = useCart();
+    const { items, totalItems, clearCart, removeItem } = useCart();
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -69,6 +69,10 @@ export default function CheckoutPage() {
                     <li key={c.menuItem.id} className='checkout-item'>
                         {c.menuItem.name} x {c.quantity} - $
                         {(c.menuItem.price * c.quantity).toFixed(2)}
+                        <button className='remove-item'
+                            onClick={() => removeItem(c.menuItem.id)}>
+                                Remove
+                            </button>
                     </li>
                 ))}
             </ul>

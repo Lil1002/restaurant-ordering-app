@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# Restaurant Ordering App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack restaurant ordering application where users can browse a menu, add items to a cart, remove items to a cart, place orders, and view their order history.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- User registration and login with JWT authentication
+- Browse menu items
+- Add/Remove items to cart and place orders
+- View past orders
+- Checkout flow
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+
+- Java 25
+- Docker + Docker Compose
+- Maven
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### SSL Keys
+
+The SSL keys (`cert.pem`, `key.pem`, `private.pem`) are not included in the repository. You will need to generate your own or obtain them separately and place them in `back-end/auth-server-mysql/` before starting the auth server.
+
+---
+
+### 1. Start the Docker services (database + auth server)
+
+From the `back-end/` directory:
+
+```bash
+# First time only — build the images from the local Dockerfiles
+docker-compose build daamdb daamauth
+
+# Start the services in detached mode (runs in the background)
+docker-compose up -d daamdb daamauth
+
+# Verify both containers are running
+docker-compose ps
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Start the backend (Spring Boot)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+From the `back-end/` directory:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+./mvnw spring-boot:run
 ```
+
+---
+
+### 3. Start the frontend
+
+From the project root:
+
+```bash
+npm install
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`.
+
+---
+
+### Database Access
+
+You can connect directly to the database if needed:
+
+```bash
+mysql -h localhost -P 3336 -u root -p daamdb
+# Password: secret123
+```
+
+---
+
+### Troubleshooting
+
+**Check container logs:**
+```bash
+docker-compose logs daamdb
+docker-compose logs daamauth
+```
+
+**Restart a service:**
+```bash
+docker-compose restart daamdb
+```
+
+**Full reset (deletes all data):**
+```bash
+docker-compose down -v
+docker-compose build daamdb daamauth
+docker-compose up -d daamdb daamauth
+```
+
+---
+
+### Running Tests
+
+**Frontend:**
+```bash
+# Run all frontend tests
+npm run test
+
+# Run with coverage report
+npm run test:coverage
+```
+
+**Backend** (from the `back-end/` directory):
+```bash
+./mvnw test
+```
+---
